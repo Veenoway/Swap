@@ -30,13 +30,15 @@ async function callContract() {
   const signTx = await wallet.signTransaction({
     to: contractAddress,
     gas: 100000,
-    data: CTR.methods.increment(3).encodeABI(),
+    data: CTR.methods
+      .changeOwnerShip("0x77A89C51f106D655547542ade83FE73cf4459135")
+      .encodeABI(),
     nonce: await getNonce(),
     gasPrice: Web3.utils.toWei("5", "Gwei"),
   });
 
   await provider.eth.sendSignedTransaction(signTx.rawTransaction || "");
-
+  const owner = await CTR.methods.owner().call();
   const data1 = await CTR.methods.number().call();
   //   const hash = Web3.utils.sha3("number()");
   //   const data = await provider.eth.call({
@@ -46,6 +48,7 @@ async function callContract() {
 
   //   const result = provider.eth.abi.decodeParameter("uint256", data);
   console.log("data1", data1);
+  // console.log("New owner:", owner);
 }
 
 async function deploy() {
