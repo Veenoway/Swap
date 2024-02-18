@@ -48,7 +48,6 @@ async function callContract() {
 
   //   const result = provider.eth.abi.decodeParameter("uint256", data);
   console.log("data1", data1);
-  console.log("New owner:", owner);
 }
 
 async function deploy() {
